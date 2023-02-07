@@ -1,11 +1,29 @@
 class Student {
-  constructor(private name: string, private id: number) {}
-  private describe(this: Student) {
+  protected class: string[] = [];
+  constructor(private readonly id: number, public name: string) {}
+  describe(this: Student) {
     console.log(`Mr/Ms ${this.name}`);
-    this.name = "Reza";
+    // this.name = "Reza"; //Read only!!!!!
   }
 }
-const newStudent = new Student("Ali", 5);
+
+class Person extends Student {
+  constructor(id: number, public reports: string[]) {
+    super(id, "Ali");
+  }
+  showReports() {
+    console.log(`Report:${this.reports[0]}`);
+    this.class.push(this.reports[0]);
+    console.log(this.class);
+  }
+}
+
+const newStudent = new Student(5, "Hasan");
+const newPerson = new Person(666, ["First report..."]);
+newPerson.describe();
+newPerson.showReports();
+console.log(newStudent);
+console.log(newPerson);
 
 // Student.describe();
 // newStudent.describe();
