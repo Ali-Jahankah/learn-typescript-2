@@ -6,10 +6,8 @@ class Student {
         this.class = [];
         this.item = name;
     }
-    describe() {
-        console.log(`Mr/Ms ${this.name}`);
-        // this.name = "Reza"; //Read only!!!!!
-    }
+    // console.log(`Mr/Ms ${this.name}`);
+    // this.name = "Reza"; //Read only!!!!!
     static showLog(value) {
         console.log(value);
     }
@@ -30,15 +28,25 @@ class Person extends Student {
         super(id, "Ali");
         this.reports = reports;
     }
+    static getInstance() {
+        if (Person.instance) {
+            return this.instance;
+        }
+        this.instance = new Person(666, ["Gholi"]);
+        return this.instance;
+    }
     showReports() {
         console.log(`Report:${this.reports[0]}`);
         this.class.push(this.reports[0]);
         console.log(this.class);
     }
+    describe() {
+        console.log("This is Person with ID: " + this.id);
+    }
 }
-const newStudent = new Student(5, "Hasan");
+const newStudent = Person.getInstance();
 newStudent.settingPrivetItem = "NewStter";
-const newPerson = new Person(666, ["First report..."]);
+const newPerson = Person.getInstance();
 newPerson.describe();
 newPerson.showReports();
 console.log(newStudent);
