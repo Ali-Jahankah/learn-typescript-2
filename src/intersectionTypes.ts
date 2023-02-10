@@ -47,3 +47,44 @@ const getDetails = (val: emp) => {
 getDetails({ name: "Ali", date: new Date() });
 getDetails({ name: "Reza", age: 5 });
 console.log(person);
+
+type Combinable = number | string;
+function add(v: number, z: number): number;
+function add(v: string, z: string): string;
+function add(v: Combinable, z: Combinable) {
+  if (typeof v === "number" && typeof z === "number") {
+    return v + z;
+  }
+  return String(v) + String(z);
+}
+add("5", "5");
+interface ErrorContainer {
+  [prop: string]: string;
+}
+let test: ErrorContainer;
+test = {
+  email: "Email is not corrected",
+  password: "Password is not correct",
+};
+interface Horse {
+  type: "horse";
+  speed: number;
+}
+interface Bird {
+  type: "bird";
+  flyingSpeed: number;
+}
+type Animal = Horse | Bird;
+const showSpeed = (anim: Animal) => {
+  switch (anim.type) {
+    case "bird":
+      console.log(anim.flyingSpeed);
+      break;
+    case "horse":
+      console.log(anim.speed);
+      break;
+    default:
+      return;
+  }
+};
+showSpeed({ type: "horse", speed: 666 });

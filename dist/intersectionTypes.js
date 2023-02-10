@@ -38,4 +38,29 @@ const getDetails = (val) => {
 getDetails({ name: "Ali", date: new Date() });
 getDetails({ name: "Reza", age: 5 });
 console.log(person);
+function add(v, z) {
+    if (typeof v === "number" && typeof z === "number") {
+        return v + z;
+    }
+    return String(v) + String(z);
+}
+add("5", "5");
+let test;
+test = {
+    email: "Email is not corrected",
+    password: "Password is not correct",
+};
+const showSpeed = (anim) => {
+    switch (anim.type) {
+        case "bird":
+            console.log(anim.flyingSpeed);
+            break;
+        case "horse":
+            console.log(anim.speed);
+            break;
+        default:
+            return;
+    }
+};
+showSpeed({ type: "horse", speed: 666 });
 //# sourceMappingURL=intersectionTypes.js.map
