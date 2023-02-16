@@ -1,63 +1,60 @@
 "use strict";
-// const names: Array<string> = ["Ali", "Reza"];
-// const promise: Promise<any> = new Promise((resolve, reject) => {
-//   setTimeout(() => {
-//     resolve(console.log("This is done!"));
-//   }, 3000);
-// });
-// const merge = <T extends object, U extends object>(a: T, b: U) =>
-//   Object.assign(a, b);
-// const mergeMe = merge({ name: "Ali" }, { age: 26, country: "UK" });
-// console.log(mergeMe);
-class Student {
-    constructor() {
-        this.data = [];
-    }
-    addData(d) {
-        this.data.push(d);
-    }
-    removeData(d) {
-        if (this.data.indexOf(d) === -1) {
-            return;
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+//Decorators & Factory decorators =>function | Capital letter | Using @ before name | Written On the top of Classes
+const Logger = (constructor) => {
+    console.log("This is a Looger function");
+    console.log(constructor);
+};
+const SecondLogger = (constructor) => {
+    console.log("This is the second Decorator function");
+};
+const DecFactory = (st, id) => {
+    console.log("Outside deco fact");
+    return (constructor) => {
+        const newStudent = new constructor();
+        if (st && id) {
+            const h1Tag = document.getElementById(id);
+            h1Tag.innerHTML = newStudent.name;
         }
-        this.data.splice(this.data.indexOf(d), 1);
+        // console.log(constructor);
+        console.log("inside Deco factory" + st);
+    };
+};
+//Property Decorator | Accessor decorators | Method decorators | Parameter decorators
+let Student = class Student {
+    constructor() {
+        this.name = "Ali";
+        console.log("Creating student...");
     }
-    showData() {
-        console.log([...this.data]);
+};
+Student = __decorate([
+    DecFactory("<span>Ali</span>", "test"),
+    SecondLogger,
+    Logger
+], Student);
+const newStudent = new Student();
+console.log(newStudent);
+const Log1 = (target, name) => { };
+class Product {
+    constructor(name, price) {
+        this.name = name;
+        this._price = price;
+    }
+    set price(val) {
+        if (val > 0 && val) {
+            this._price = val;
+        }
+        else {
+            throw new Error("Insert a posetive value!");
+        }
+    }
+    createTax(tax) {
+        return this._price + tax;
     }
 }
-const newStudent = new Student();
-newStudent.addData("Ali");
-newStudent.addData("reza");
-newStudent.removeData("Ali");
-newStudent.showData();
-// =====================Array<string>===string[]=====================
-// interface Lengthy {
-//   length: number;
-// }
-// const countAndPrint = <T extends Lengthy>(d: T): Array<any> => {
-//   let text = "Got no length";
-//   if (d.length > 0) {
-//     text = `Length is:${d.length}`;
-//     return [d, text];
-//   }
-//   return [d, text];
-// };
-// console.log(countAndPrint("Ali"));
-// console.log(countAndPrint([]));
-// console.log(countAndPrint(countAndPrint("ali")));
-const findKey = (o, s) => {
-    return o[s];
-};
-console.log(findKey({ name: "Ali" }, "name"));
-const createObj = (name, age, arr) => {
-    let myObj = {};
-    myObj.name = name;
-    myObj.age = age;
-    myObj.skills = arr;
-    return myObj;
-};
-console.log(createObj("Gholi", 666, ["X", "XX", "XXX"]));
-const names = ["reza", "hasan"];
-// names.push("xxxxxx")
 //# sourceMappingURL=app.js.map
