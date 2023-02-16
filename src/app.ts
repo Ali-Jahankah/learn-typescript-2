@@ -9,14 +9,20 @@ const SecondLogger = (constructor: Function) => {
 
 const DecFactory = (st: string, id: string) => {
   console.log("Outside deco fact");
-  return (constructor: any) => {
-    const newStudent = new constructor();
-    if (st && id) {
-      const h1Tag = document.getElementById(id)!;
-      h1Tag.innerHTML = newStudent.name;
-    }
-    // console.log(constructor);
-    console.log("inside Deco factory" + st);
+  return <T extends { new (...args: any[]): { name: string } }>(
+    orgConstructor: T
+  ) => {
+    return class extends orgConstructor {
+      constructor(..._: any[]) {
+        super();
+        if (st && id) {
+          const h1Tag = document.getElementById(id)!;
+          h1Tag.innerHTML = this.name;
+        }
+        // console.log(constructor);
+        console.log("inside Deco factory" + st);
+      }
+    };
   };
 };
 //Property Decorator | Accessor decorators | Method decorators | Parameter decorators
@@ -32,8 +38,35 @@ class Student {
 const newStudent = new Student();
 console.log(newStudent);
 
-const Log1 = (target: any, name: string | Symbol) => {};
+const Log1 = (target: any, name: string | Symbol) => {
+  console.log("Property decorator...");
+  console.log(target);
+  console.log(name);
+};
+const Log2 = (target: any, name: string, decorator: PropertyDescriptor) => {
+  console.log("accessor decorator");
+  console.log(target);
+  console.log(name);
+  console.log(decorator);
+};
+const Log3 = (
+  target: any,
+  name: string | Symbol,
+  decorator: PropertyDescriptor
+) => {
+  console.log("Method decorator.-.-.-.-.-.-.-");
+  console.log(target);
+  console.log(name);
+  console.log(decorator);
+};
+const Log4 = (target: any, name: string | Symbol, position: number) => {
+  console.log("Parameter decorator");
+  console.log(target);
+  console.log(name);
+  console.log(position);
+};
 class Product {
+  @Log1
   name: string;
   private _price: number;
 
@@ -41,6 +74,7 @@ class Product {
     this.name = name;
     this._price = price;
   }
+  @Log2
   set price(val: number) {
     if (val > 0 && val) {
       this._price = val;
@@ -48,7 +82,29 @@ class Product {
       throw new Error("Insert a posetive value!");
     }
   }
-  createTax(tax: number): number {
+  @Log3
+  createTax(@Log4 tax: number): number {
     return this._price + tax;
   }
 }
+const AutoBinder = (_: any, _2: string, descriptor: PropertyDescriptor) => {
+  const method = descriptor.value;
+  const newDescriptor: PropertyDescriptor = {
+    get() {
+      const boundFn = method.bind(this);
+      return boundFn;
+    },
+  };
+  return newDescriptor;
+};
+
+class Printer {
+  message = "It works";
+  @AutoBinder
+  showPrint() {
+    console.log(this.message);
+  }
+}
+const newPrint = new Printer();
+const btn = document.querySelector("button")! as HTMLButtonElement;
+btn.addEventListener("click", newPrint.showPrint.bind(newPrint));
