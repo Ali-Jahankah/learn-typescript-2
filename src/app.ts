@@ -1,4 +1,5 @@
 //Decorators & Factory decorators =>function | Capital letter | Using @ before name | Written On the top of Classes
+import { Validate, validateOrReject, IsInt, Length } from "class-validator";
 const Logger = (constructor: Function) => {
   console.log("This is a Looger function");
   console.log(constructor);
@@ -30,12 +31,13 @@ const DecFactory = (st: string, id: string) => {
 @SecondLogger
 @Logger
 class Student {
-  name = "Ali";
-  constructor() {
+  name: string;
+  constructor(name: string) {
+    this.name = name;
     console.log("Creating student...");
   }
 }
-const newStudent = new Student();
+const newStudent = new Student("Hasan");
 console.log(newStudent);
 
 const Log1 = (target: any, name: string | Symbol) => {
@@ -65,6 +67,7 @@ const Log4 = (target: any, name: string | Symbol, position: number) => {
   console.log(name);
   console.log(position);
 };
+
 class Product {
   @Log1
   name: string;
