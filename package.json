@@ -18,5 +18,13 @@
   },
   "dependencies": {
     "class-validator": "^0.14.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ali-Jahankah/learn-typescript-2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ali-Jahankah/learn-typescript-2/issues"
+  },
+  "homepage": "https://github.com/Ali-Jahankah/learn-typescript-2#readme"
 }
