@@ -1,13 +1,5 @@
-//Decorators & Factory decorators =>function | Capital letter | Using @ before name | Written On the top of Classes
-// import {
-//   Validate,
-//   validateOrReject,
-//   IsInt,
-//   Length,
-//   validate,
-//   Min,
-//   Max,
-// } from "class-validator";
+// Decorators & Factory decorators =>function | Capital letter | Using @ before name | Written On the top of Classes
+import { Length, validate, Min, Max } from "class-validator";
 // const cv = require("class-validator");
 
 // const Logger = (constructor: Function) => {
@@ -16,6 +8,7 @@
 // };
 // const SecondLogger = (constructor: Function) => {
 //   console.log("This is the second Decorator function");
+//   console.log(constructor);
 // };
 
 // const DecFactory = (st: string, id: string) => {
@@ -29,6 +22,7 @@
 //         if (st && id) {
 //           const h1Tag = document.getElementById(id)!;
 //           h1Tag.innerHTML = this.name;
+//           console.log(h1Tag);
 //         }
 //         // console.log(constructor);
 //         console.log("inside Deco factory" + st);
@@ -37,9 +31,10 @@
 //   };
 // };
 // //Property Decorator | Accessor decorators | Method decorators | Parameter decorators
-// @DecFactory("<span>Ali</span>", "test")
+
 // @SecondLogger
 // @Logger
+// @DecFactory("<span>Ali</span>", "test")
 // class Student {
 //   name: string;
 //   constructor(name: string) {
@@ -47,7 +42,7 @@
 //     console.log("Creating student...");
 //   }
 // }
-// const newStudent = new Student("Hasan");
+// const newStudent = new Student("Ali");
 // console.log(newStudent);
 
 // const Log1 = (target: any, name: string | Symbol) => {
@@ -100,6 +95,8 @@
 //     return this._price + tax;
 //   }
 // }
+// const x = new Product("Chips", 44);
+// console.log(x);
 // const AutoBinder = (_: any, _2: string, descriptor: PropertyDescriptor) => {
 //   const method = descriptor.value;
 //   const newDescriptor: PropertyDescriptor = {
@@ -122,33 +119,35 @@
 // const btn = document.querySelector("button")! as HTMLButtonElement;
 // btn.addEventListener("click", newPrint.showPrint.bind(newPrint));
 
-// class Course {
-//   @Length(1, 10)
-//   title: string;
-//   @Min(2)
-//   @Max(8)
-//   task: number;
-//   constructor(title: string, task: number) {
-//     this.title = title;
-//     this.task = task;
-//   }
-// }
-// const form = document.getElementById("form")! as HTMLFormElement;
-// const title = document.getElementById("title")! as HTMLInputElement;
-// const task = document.getElementById("task")! as HTMLInputElement;
+class Course {
+  @Length(1, 10)
+  title: string;
+  @Min(2)
+  @Max(8)
+  task: number;
+  constructor(title: string, task: number) {
+    this.title = title;
+    this.task = task;
+  }
+}
+const form = document.getElementById("form")! as HTMLFormElement;
+const title = document.getElementById("title")! as HTMLInputElement;
+const task = document.getElementById("task")! as HTMLInputElement;
 
-// const validation = (course: {}) => {
-//   validate(course).then((err: any) => {
-//     if (err.length > 0) {
-//       console.log("Validation error", err);
-//     } else {
-//       console.log("Course created");
-//     }
-//   });
-// };
+const validation = (course: {}) => {
+  validate(course).then((err: any) => {
+    if (err.length > 0) {
+      console.log("Validation error", err);
+    } else {
+      console.log("Course created");
+    }
+  });
+};
 
-// form.addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   const newCourse = new Course(title.value, +task.value);
-//   validation(newCourse);
-// });
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const newCourse = new Course(title.value, +task.value);
+  validation(newCourse);
+});
+const x = new Course("TS", 2);
+console.log(x);
